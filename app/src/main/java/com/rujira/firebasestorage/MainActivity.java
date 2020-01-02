@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import dmax.dialog.SpotsDialog;
 
@@ -65,8 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                        String url = task.getResult().toString();
+                        String url = task.getResult().toString().substring(0, task.getResult().toString().indexOf("&token"));
                         Log.d("DIRECTLINK", url);
+                        Picasso.get().load(url).into(imageView);
+
+                        dialog.dismiss();
                     }
                 }
             });
